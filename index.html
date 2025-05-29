@@ -1,51 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PhonePe Reward</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UPI Payment - Reward Zone</title>
   <style>
     body {
-      background: #e0f7ff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px 20px;
+      padding: 2rem;
+      background: #f0f4f8;
     }
     h1 {
-      color: #0b6efd;
-      font-size: 2em;
+      color: #4a148c;
     }
-    p {
-      font-size: 1.2em;
+    button {
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 8px;
       margin: 20px 0;
     }
-    .claim-btn {
-      background-color: #6200ee;
-      color: white;
-      font-size: 1.2em;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 30px;
+    button:hover {
+      background-color: #6a1b9a;
     }
-    .claim-btn:hover {
-      background-color: #3700b3;
+    img {
+      margin-top: 20px;
+      width: 200px;
+      height: 200px;
+    }
+    p {
+      color: #333;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Congratulations!</h1>
-  <p>You have won ₹1 cashback via PhonePe Reward</p>
-  <a class="claim-btn"
-     href="upi://pay?pa=8926352621@ybl&pn=Reward%20Zone&am=1&cu=INR">
-    Claim ₹1 Now
-  </a>
-  <p style="margin-top: 40px; color: gray; font-size: 0.9em;">
-    Open this page on mobile to complete the UPI payment using GPay or PhonePe.
-  </p>
+  <h1>Reward Zone - Pay ₹1</h1>
+
+  <button id="payButton">Pay ₹1 via UPI</button>
+
+  <p>Or scan this QR code to pay:</p>
+  <img id="qrCode" alt="UPI QR Code" />
+
+  <script>
+    const upiId = '8926352621@ybl';
+    const payeeName = 'Reward Zone'; // This appears as payee name in some apps
+    const amount = '1';
+    const currency = 'INR';
+    const transactionNote = 'Reward payment';
+
+    // Construct UPI payment URL
+    const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=${currency}&tn=${encodeURIComponent(transactionNote)}`;
+
+    // Button click opens UPI URL
+    document.getElementById('payButton').addEventListener('click', () => {
+      window.location.href = upiUrl;
+    });
+
+    // Generate QR code using a free API (goqr.me)
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+    document.getElementById('qrCode').src = qrApiUrl;
+  </script>
 </body>
 </html>
